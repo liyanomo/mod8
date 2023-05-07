@@ -1,6 +1,6 @@
 from peewee import *
 
-conn = SqliteDatabase ('users1.sqlite') 
+conn = SqliteDatabase ('users03.sqlite') 
 
 class BaseModel(Model):
     class Meta:
@@ -50,19 +50,16 @@ def create_tbls():
     st_courses = Student_courses (student_id = 4,course_id = 2)
     st_courses.save()
 
-create_tbls()
-for student in Students.select().where(Students.age > 30):
-	print(student.name)
+#create_tbls()
+#for student in Students.select().where(Students.age > 30):
+#	print(student.name)
 
 
-q = Students.select().join(Student_courses).join(Courses).where ((Courses.id == 1) and (Student_courses.course_id == Courses.id) and (Students.id == Student_courses.student_id))
-for student in q:
-    print(Student.name, student.city)
+for student in Students.select().join(Student_courses).where ((Student_courses.course_id == 1) & (Students.id == Student_courses.student_id)):
+    print(student.name, 'python')
 
 
-q2 = Students.select().join(Student_courses).join(Courses).where((Students.city == 'Spb') and (Courses.name == 'python'))
-for st in q2:
-	 print(Student.name, Student.city)
+#for student in Students.select().join(Student_courses).where ((Students.city == 'Spb') & (Student_courses.course_id == 1) & (Students.id == Student_courses.student_id)):
+#     print(student.name, 'python', student.city)
 
 conn.close()
-
